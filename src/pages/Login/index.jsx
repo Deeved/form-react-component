@@ -15,8 +15,8 @@ function Login(){
         }
         fields={
           [
-            {type: 'input', id: 'username', placeholder: 'Nome de usuário ou email'},
-            
+            {type: 'input', name: 'username', placeholder: 'Nome de usuário ou email'},
+            {type: 'input', name: 'password', placeholder: 'senha'},
             
           ]
         }

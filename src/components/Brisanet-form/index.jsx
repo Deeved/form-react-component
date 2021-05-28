@@ -1,14 +1,27 @@
 import { Input } from "@chakra-ui/input"
 import { Box, Flex, Heading } from "@chakra-ui/layout"
-import { useState } from "react"
+import { useState } from "react";
 
 function useForm({
   initialValues
 }){
-  console.log(initialValues)
+  const [values, setValues] = useState(initialValues)
 
+  function handleChange(event){
+    const name = event.target.getAttribute('name')
+    const value = event.target.value
+
+    setValues({
+      ...values,
+      [name] : value
+    })
+    
+  }
+
+  
   return {
-    values: initialValues
+    values,
+    handleChange
   }
 } 
 
@@ -31,27 +44,36 @@ function BrisanetForm(props){
     color='black',
   } = header
   
-  const formValues = fields.map(field =>({[field.id]: 'aaa'}))
+  // const formValues = fields.map( field => ({[field.id]: 'aaa'}))
+  const formValues = {}
+  fields.forEach( field => {
+    formValues[field.id] = 'a' 
+  });
+  
+
+  // RESOLVER PROBLEMA DE UNDEFINED do formValues
+  console.log(formValues)
 
   const form = useForm({
-    initialValues:{...formValues} 
+    initialValues: {...formValues} 
   })
 
 
-  const newField = (field) => (
-    <Box m="1rem">
+  const newField = (field, index) => (
+    <Box m="1rem" key={index}>
       {
         field.type ==='input' &&
         <Input
           placeholder={field.placeholder || ''}
-          name={field.id || ''}
-          value={form.values[0][field.id]}
+          name={field.name || ''}
+          // value={form.values[index][field.id]}
+          value={form.values[field.name]}
+          onChange={form.handleChange}
         />
       }
     </Box>
   )  
   
-  console.log(form.values.username)
   return(
     <Flex 
       p={p} 
@@ -65,8 +87,8 @@ function BrisanetForm(props){
           <Heading textAlign="center" size={size} bgColor={titleBgColor} color={color}>{title}</Heading>
         </Box>
 
-        {/* construi os campos do formulario */}
-        {fields.map(field => newField(field)) }  
+        {/* cria os campos do formulário */}
+        {fields.map( (field, index) => newField(field, index)) }  
 
       </form>
     </Flex>
