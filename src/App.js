@@ -1,24 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import { Flex } from "@chakra-ui/react"
 
+import Login from './pages/Login'
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Flex h="100vh" alignItems="center" justifyContent="center" bgGradient="linear(to-tr, #4f3f66, #3b2e5f, #1f1f59,#001253, #00004e)" >
+      <Login/>
+    </Flex>
   );
 }
 
