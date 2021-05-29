@@ -44,15 +44,12 @@ function BrisanetForm(props){
     color='black',
   } = header
   
-  // const formValues = fields.map( field => ({[field.id]: 'aaa'}))
+  // Configura os estados iniciais para o controle dos inputs
   const formValues = {}
   fields.forEach( field => {
-    formValues[field.id] = 'a' 
+    formValues[field.name] = ''
   });
   
-
-  // RESOLVER PROBLEMA DE UNDEFINED do formValues
-  console.log(formValues)
 
   const form = useForm({
     initialValues: {...formValues} 
