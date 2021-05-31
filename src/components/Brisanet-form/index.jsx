@@ -1,3 +1,4 @@
+import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input"
 import { Box, Flex, Heading } from "@chakra-ui/layout"
 import { useState } from "react";
@@ -15,13 +16,17 @@ function useForm({
       ...values,
       [name] : value
     })
-    
   }
 
+  function handleSubmit(event){
+    event.preventDefault()
+    console.log(values)
+  }
   
   return {
     values,
-    handleChange
+    handleChange,
+    handleSubmit
   }
 } 
 
@@ -47,14 +52,12 @@ function BrisanetForm(props){
   // Configura os estados iniciais para o controle dos inputs
   const formValues = {}
   fields.forEach( field => {
-    formValues[field.name] = ''
+    formValues[field.name] = field.defaultValue? field.defaultValue : ''
   });
   
-
   const form = useForm({
     initialValues: {...formValues} 
   })
-
 
   const newField = (field, index) => (
     <Box m="1rem" key={index}>
@@ -63,8 +66,8 @@ function BrisanetForm(props){
         <Input
           placeholder={field.placeholder || ''}
           name={field.name || ''}
-          // value={form.values[index][field.id]}
           value={form.values[field.name]}
+          type={field.isPassword ? 'password': 'text'}
           onChange={form.handleChange}
         />
       }
@@ -87,6 +90,9 @@ function BrisanetForm(props){
         {/* cria os campos do formulário */}
         {fields.map( (field, index) => newField(field, index)) }  
 
+        <Box m="1rem" textAlign="right">
+          <Button colorScheme="blue" type="submit" onClick={form.handleSubmit}>Enviar</Button>
+        </Box>
       </form>
     </Flex>
   )
